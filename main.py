@@ -1,7 +1,7 @@
 
 from typing import List
 from fastapi import FastAPI, Query
-from app.routers import recipes
+import recipes
 
 app = FastAPI(
     title="Recipes API"
