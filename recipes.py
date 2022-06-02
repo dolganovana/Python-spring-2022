@@ -9,9 +9,9 @@ def find_recipe(query: str):
     mask = df["name"].apply(lambda x: query in x)
     return df[mask].to_dict(orient="index")
 
-@router.get('/recipes/{recipe_id}')
+@router.get('/recipes/id/{recipe_id}')
 def id_recipe(recipe_id: str) -> dict:
-    return df[df["id"] == recipe_id].ro_dict()
+    return df[df["id"] == recipe_id].to_dict()
 
 @router.get('/recipes/random')
 def random_recipe():
@@ -48,8 +48,9 @@ def new_recipe(recipe_json):
     fats = "n/a"
     list = [id, name, ingridient, image, order_recipe, rec_keyword, cal, protein, carb, rec_link, fats]
     total = pd. Series(list, index=df.columns)
-    new_df = df
-    new_df = new_df.append(total, ignore_index=True)
+    #new_df = df
+    #new_df = new_df.append(total, ignore_index=True)
+    new_df = pd.DataFrame(data={"recipe": [id, name, ingridient, image, order_recipe, rec_keyword, cal, protein, carb, rec_link, fats]})
 
 @router.post('/recipes/search')
 def search_by_ingridients(ingridients: list):
