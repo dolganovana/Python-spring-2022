@@ -11,11 +11,6 @@ app = FastAPI(
 def root()->dict:
     return{"message": "Hello!"}
 
-
-@app.get("/items/")
-def read_items(q: List[int] = Query(None)):
-    return {"q": q}
-
 app.include_router(recipes.router)
 
 if __name__ == "__main__":
