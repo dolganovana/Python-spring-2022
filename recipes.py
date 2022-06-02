@@ -4,19 +4,6 @@ import pandas as pd
 df = pd.read_csv("eda.csv")
 router = APIRouter()
 
-json =({
-    "id": "some id",
-    "name": "put",
-    "ingredients": "list",
-    "recipe": "text",
-    "img_url": "image",
-    "nutrition_info": {
-        "callories": 200,
-        "proteins": 220,
-        "carbs": 100
-    },
-})
-
 @router.get('/recipes/query')
 def find_recipe(query: str):
     mask = df["name"].apply(lambda x: query in x)
@@ -37,7 +24,7 @@ def recipes_calories(calories: int, top_n: int) -> dict:
     logger.info(f"{top_n} recipes that have less than {calories} ")
     return top_sorted.to_dict(orient='index')
 
-@router.get('/recipes/top difficult')
+@router.get('/recipes/most_difficult')
 def recipes_difficult(difficulty: str, top_n: int) -> dict:
     ascending = True if difficulty == 'simple' else False
     new_df = pd.DataFrame().assign(id = df['id'], name = df['name'], steps = df['list_resipe'])
@@ -46,7 +33,7 @@ def recipes_difficult(difficulty: str, top_n: int) -> dict:
     top_sorted = new_df.sort_values(by='difficulty', ascending=ascending).head(top_n)
     return top_sorted.to_dict(orient='index')
 
-@router.get('/recipes/new', status_code=201)
+@router.post('/recipes/new', status_code=201)
 def new_recipe(recipe_json):
     id = recipe_json["id"]
     name = recipe_json["name"]
