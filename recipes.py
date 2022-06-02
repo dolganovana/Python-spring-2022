@@ -66,5 +66,5 @@ def new_recipe(recipe_json):
 
 @router.post('/recipes/search')
 def search_by_ingridients(ingridients: list):
-    mask = df["ingridient"].apply(lambda x: ingridients in x)
+    mask = df["ingridients"].apply(lambda x: ingridients in x)
     return df[mask].head(3)["name"].values
